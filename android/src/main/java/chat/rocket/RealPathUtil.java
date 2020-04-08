@@ -112,11 +112,17 @@ public class RealPathUtil {
 
             ParcelFileDescriptor pfd = context.getContentResolver().openFileDescriptor(uri, "r");
 
-            FileChannel src = new FileInputStream(pfd.getFileDescriptor()).getChannel();
-            FileChannel dst = new FileOutputStream(tmpFile).getChannel();
-            dst.transferFrom(src, 0, src.size());
-            src.close();
-            dst.close();
+            InputStream fileStream = new FileInputStream(pfd.getFileDescriptor());
+            OutputStream newDatabase = new FileOutputStream(tmpFile);
+            byte[] buffer = new byte[1024];
+            int length;
+            while((length = fileStream.read(buffer)) > 0)
+            {
+                newDatabase.write(buffer, 0, length);
+            }
+            newDatabase.flush();
+            fileStream.close();
+            newDatabase.close();
         } catch (IOException ex) {
             return null;
         }

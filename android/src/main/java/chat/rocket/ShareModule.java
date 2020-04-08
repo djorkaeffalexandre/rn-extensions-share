@@ -86,8 +86,11 @@ public class ShareModule extends ReactContextBaseJavaModule {
                     } else if (type.equals("video/*")) {
                         type = "video/mp4";
                     }
-
-                    map.putString("type", "media");
+                    if(type.equals("text/x-vcard")) {
+                        map.putString("type", "contact");
+                    } else {
+                      map.putString("type", "media");
+                    }
                 }
             }
         }
