@@ -16,6 +16,10 @@ NSExtensionContext* extensionContext;
     return nil;
 }
 
+- (BOOL)isModalInPresentation {
+    return true;
+}
+
 RCT_EXPORT_MODULE();
 
 - (void)viewDidLoad
